@@ -1,0 +1,278 @@
+body { margin: 0; }
+.birthday-app, .birthday-app * { box-sizing: border-box; }
+.birthday-app {
+  --ink: #382f43; --muted: #706578; --accent: #765291; --line: #eae3ef;
+  color: var(--ink); background: #f8f6fa; min-height: 100vh; min-height: 100svh;
+  font: 14px/1.5 "Segoe UI", system-ui, sans-serif;
+}
+.birthday-app h1, .birthday-app h2, .birthday-app h3, .birthday-app p { margin-top: 0; }
+.birthday-app h2 { font-size: 19px; letter-spacing: -.4px; line-height: 1.3; margin-bottom: 6px; }
+.birthday-app h3 { font-size: 17px; margin-bottom: 8px; }
+.birthday-app p { color: var(--muted); }
+.birthday-app button, .birthday-app input, .birthday-app select, .birthday-app textarea { font: inherit; }
+.birthday-app button, .birthday-app a, .birthday-app .photo-upload { -webkit-tap-highlight-color: transparent; }
+.birthday-app button { cursor: pointer; }
+.birthday-app button:disabled { cursor: not-allowed; opacity: .5; }
+.birthday-app a { color: inherit; }
+.birthday-app label { display: block; color: var(--ink); font-size: 13px; font-weight: 600; }
+.birthday-app input, .birthday-app select, .birthday-app textarea {
+  display: block; width: 100%; min-width: 0; margin-top: 7px; padding: 12px 14px;
+  color: var(--ink); background: #fff; border: 1px solid #ded4e5; border-radius: 10px;
+  font-size: 14px; font-weight: 400; line-height: 1.45;
+}
+.birthday-app textarea { resize: vertical; min-height: 110px; }
+.birthday-app input::placeholder, .birthday-app textarea::placeholder { color: #827589; }
+.birthday-app :is(a, button, input, select, textarea):focus-visible { outline: 3px solid #a079bb; outline-offset: 3px; }
+.birthday-app .button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px;
+  padding: 11px 18px; color: #5b416b; background: #fff; border: 1px solid #dfd4e6;
+  border-radius: 11px; font-size: 13px; font-weight: 600; text-decoration: none; white-space: nowrap;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.birthday-app .button.primary { color: #fff; background: linear-gradient(115deg, #765291, #8c5791); border-color: transparent; box-shadow: 0 5px 14px #76529122; }
+.birthday-app .button.small { padding: 9px 13px; font-size: 12px; }
+.birthday-app .text-button { color: #765291; background: none; border: 0; padding: 7px 2px; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+.birthday-app .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.storage-warning { padding: 12px 24px; background: #fff0cd; color: #684a16; font-size: 13px; }
+.toast { position: fixed; bottom: 22px; right: 22px; max-width: min(420px, calc(100% - 44px)); z-index: 5; pointer-events: none; }
+.toast span { display: block; padding: 14px 19px; border-radius: 14px; background: #382842; color: #fff; box-shadow: 0 8px 35px #38284233; }
+.admin-shell { display: grid; grid-template-columns: 235px minmax(0, 1fr); min-height: 100svh; }
+.admin-sidebar { position: sticky; top: 0; display: flex; flex-direction: column; align-self: start; min-height: 100svh; padding: 35px 22px 26px; background: #362740; color: #fff; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-family: Georgia, serif; font-size: 26px; font-weight: 600; line-height: 1.2; }
+.brand-icon { display: grid; place-items: center; flex: 0 0 39px; width: 39px; height: 39px; border-radius: 13px; background: #eddba9; color: #503762; font-size: 25px; font-family: Georgia, serif; }
+.brand small { display: block; margin-top: 7px; color: #cfbdd9; font: 10px/1.4 "Segoe UI", sans-serif; letter-spacing: .1px; }
+.sidebar-label { display: block; margin: 49px 12px 16px; color: #cbb7d5; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; }
+.admin-sidebar nav { display: grid; gap: 7px; }
+.admin-sidebar nav a { display: flex; align-items: center; gap: 11px; padding: 13px 14px; border-radius: 12px; color: #dfd1e7; text-decoration: none; font-size: 13px; }
+.admin-sidebar nav a > span:first-child { font-size: 20px; line-height: 1; }
+.admin-sidebar nav a.active { background: #57405f; color: #fff; }
+.nav-count { display: grid; place-items: center; min-width: 22px; height: 22px; margin-left: auto; padding-inline: 5px; border-radius: 7px; background: #eddba9; color: #4e365f; font-size: 11px; font-weight: 700; }
+.sidebar-bottom { margin-top: auto; padding: 60px 12px 0; font-size: 12px; color: #e3d7e9; }
+.sidebar-bottom p { color: #cbbbd3; font-size: 11px; line-height: 1.7; margin: 8px 0 0; }
+.local-dot { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: #b7d2b1; }
+.admin-main { width: 100%; max-width: 1320px; padding: 30px 44px 20px; margin-inline: auto; min-width: 0; }
+.admin-topbar { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+.admin-topbar > span { color: var(--muted); font-size: 10px; font-weight: 600; letter-spacing: 1.6px; }
+.dashboard-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 35px 0 26px; }
+.section-kicker { color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: 1.6px; }
+.dashboard-heading .section-kicker { margin-bottom: 10px; overflow-wrap: anywhere; }
+.dashboard-heading h1 { max-width: 690px; margin: 0 0 12px; font: 400 clamp(28px, 3.2vw, 40px)/1.15 Georgia, serif; letter-spacing: -1px; }
+.dashboard-heading p:last-child { font-size: 13px; margin-bottom: 0; }
+.heading-flower { display: grid; place-items: center; flex: 0 0 70px; width: 70px; height: 70px; color: #9b78b1; background: #eee4f5; border-radius: 50%; font-size: 59px; line-height: 1; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 28px; }
+.stat { padding: 21px 22px; background: #fff; border: 1px solid var(--line); border-radius: 17px; }
+.stat > span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+.stat strong { display: flex; align-items: baseline; flex-wrap: wrap; column-gap: 9px; font-size: 30px; font-weight: 600; letter-spacing: -1px; line-height: 1.25; }
+.stat small { color: var(--muted); font-size: 10px; font-weight: 400; letter-spacing: 0; }
+.accent-stat { background: #eee5f5; border-color: #e4d7ee; }
+.add-guest-panel { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 30px; padding: 28px; margin-bottom: 24px; border: 1px solid #e4d5ed; border-radius: 20px; background: linear-gradient(120deg, #f0e7f7, #f8f0f4); }
+.add-guest-panel h2 { margin-top: 8px; font: 400 24px/1.3 Georgia, serif; }
+.add-guest-panel p { font-size: 12px; margin: 7px 0 0; }
+.add-guest-controls { display: flex; gap: 10px; margin-top: 7px; }
+.add-guest-controls input { margin: 0; flex: 1; }
+.panel { background: #fff; border: 1px solid var(--line); border-radius: 19px; overflow: hidden; }
+.section-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; padding: 24px 26px; }
+.section-heading h2 { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin: 0; }
+.section-heading p { margin: 7px 0 0; font-size: 12px; }
+.count-pill { padding: 3px 9px; background: #f1eaf6; border-radius: 20px; color: #765291; font-size: 10px; font-weight: 600; letter-spacing: 0; }
+.search-field { width: 210px; max-width: 100%; }
+.search-field input { margin: 0; padding: 9px 12px; font-size: 12px; background: #faf8fc; }
+.empty-state { padding: 44px 25px 51px; text-align: center; border-top: 1px solid #f0eaf4; }
+.empty-symbol { display: grid; place-items: center; margin: 0 auto 17px; width: 60px; height: 60px; background: #f2eaf7; border-radius: 20px; color: #9674aa; font-size: 35px; }
+.empty-state h3 { font: 400 23px/1.3 Georgia, serif; }
+.empty-state p { max-width: 350px; margin: 10px auto 0; font-size: 12px; line-height: 1.8; }
+.guest-list { padding: 0 26px; }
+.guest-row { display: grid; grid-template-columns: 42px minmax(120px, 1fr) 120px auto; gap: 14px; align-items: center; padding: 19px 0; border-top: 1px solid #f0eaf4; }
+.guest-avatar { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 13px; background: #efe5f5; color: #7b5390; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+.guest-identity { min-width: 0; }
+.guest-identity > strong { display: block; overflow-wrap: anywhere; }
+.rename-button { display: block; padding: 3px 0 !important; font-size: 10px !important; }
+.row-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.status-badge { display: inline-block; width: fit-content; padding: 5px 9px; border-radius: 20px; background: #f3eff7; color: #70617a; font-size: 10px; font-weight: 600; white-space: nowrap; }
+.status-badge.yes { color: #326349; background: #e8f3ea; }
+.status-badge.maybe { color: #826021; background: #fbf1d9; }
+.status-badge.no { color: #975362; background: #f8e9ec; }
+.status-badge.disabled { color: #706976; background: #ece9ef; }
+.is-disabled .guest-avatar { background: #eeeaf1; color: #83748b; }
+.rename-form { display: flex; flex-wrap: wrap; column-gap: 10px; }
+.rename-form input { margin: 0; padding: 8px; font-size: 13px; }
+.page-note { margin: 13px 0 0; font-size: 11px; }
+.demo-link-panel { padding: 16px 22px; margin-bottom: 22px; background: #fff5dc; border: 1px solid #ebd8a8; border-radius: 15px; }
+.demo-link-panel .section-heading { padding: 0; gap: 7px; }
+.demo-link-panel input { font-size: 12px; }
+.demo-link-panel p { margin: 8px 0 0; font-size: 11px; color: #745f38; }
+.admin-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 28px 0 5px; color: var(--muted); font-size: 10px; }
+.inbox-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 0 26px 22px; }
+.filter-tabs { display: flex; gap: 4px; padding: 4px; border-radius: 11px; background: #f5f0f8; }
+.filter-tabs button { min-height: 36px; padding: 6px 11px; border: 0; border-radius: 8px; background: none; color: var(--muted); font-size: 11px; }
+.filter-tabs button[aria-pressed="true"] { background: #fff; color: #765291; box-shadow: 0 1px 4px #76529112; font-weight: 600; }
+.inbox-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); border-top: 1px solid var(--line); min-height: 320px; }
+.message-list { border-right: 1px solid var(--line); }
+.message-preview { display: block; width: 100%; padding: 20px 24px; border: 0; border-bottom: 1px solid var(--line); background: #fff; text-align: left; color: var(--ink); }
+.message-preview.unread { background: #fbf8fe; }
+.message-preview.selected { background: #f1e9f8; box-shadow: inset 3px 0 #8f67a9; }
+.message-preview-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.message-preview-top strong { overflow-wrap: anywhere; }
+.unread-dot { width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; background: #9766b3; }
+.message-excerpt { display: block; margin: 8px 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--muted); font-size: 12px; }
+.message-meta { display: block; color: var(--muted); font-size: 10px; }
+.message-detail { padding: 28px; min-width: 0; }
+.message-person { display: flex; align-items: center; gap: 12px; }
+.message-person h3 { margin: 0; font-size: 16px; overflow-wrap: anywhere; }
+.message-person p { margin: 3px 0 0; font-size: 11px; }
+.message-status { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.message-status > span:last-child { font-size: 11px; color: var(--muted); }
+.full-wish { white-space: pre-wrap; overflow-wrap: anywhere; padding: 24px 0 15px; font-size: 16px; line-height: 1.8; color: var(--ink) !important; }
+.message-placeholder { display: grid; align-content: center; justify-items: center; color: #b496c4; text-align: center; }
+.message-placeholder > span { font-size: 36px; }
+.message-placeholder p { margin: 12px 0; font-size: 12px; }
+.no-results { padding: 25px; font-size: 12px; }
+.settings-panel { max-width: 850px; }
+.settings-panel > form { padding: 0 26px 26px; }
+.photo-settings { display: flex; align-items: center; gap: 18px; margin: 3px 0 26px; }
+.photo-settings p { margin: 8px 0 0; font-size: 11px; }
+.photo-upload { position: relative; overflow: hidden; cursor: pointer; }
+.photo-upload input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.photo-upload:focus-within { outline: 3px solid #a079bb; outline-offset: 3px; }
+.settings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.full-width { grid-column: 1 / -1; }
+.settings-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; margin-top: 25px; padding-top: 23px; border-top: 1px solid var(--line); }
+.settings-footer p { margin: 0; font-size: 11px; }
+.inline-error { color: #9c344f !important; font-size: 12px; }
+.preview-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; padding: 17px max(20px, calc((100vw - 1120px)/2)); background: #fff; border-bottom: 1px solid var(--line); }
+.preview-bar .brand { font-size: 23px; }
+.preview-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; min-width: 0; }
+.preview-controls select { width: 170px; max-width: 100%; margin: 0; padding: 9px 12px; font-size: 12px; }
+.demo-label { color: var(--muted); font-size: 11px; }
+.invitation-page { display: grid; place-items: center; padding: 40px 20px; min-height: calc(100svh - 125px); background: radial-gradient(ellipse at 12% 15%, #eadcf9 0, transparent 50%), radial-gradient(ellipse at 92% 85%, #fbded9 0, transparent 48%), linear-gradient(135deg, #faf6ff, #fff8f0); }
+.invitation-card { position: relative; width: min(100%, 530px); padding: 38px 44px 30px; overflow: hidden; text-align: center; background: #ffffffed; border: 1px solid #fff; border-radius: 32px; box-shadow: 0 24px 70px #6f4d8121, 0 4px 14px #6f4d810a; animation: invitation-arrive .6s ease both; }
+.invitation-eyebrow { margin: 0 0 27px; color: var(--accent) !important; font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; }
+.invitation-profile { position: relative; width: 154px; margin: 0 auto 29px; }
+.portrait-wrap { width: 154px; height: 154px; }
+.portrait { display: block; width: 100%; height: 100%; border: 6px solid #fff; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 1px #e9dced, 0 10px 24px #7652911f; }
+.portrait-wrap.compact { width: 76px; height: 76px; flex-shrink: 0; }
+.compact .portrait { border-width: 3px; }
+.invitation-year { position: absolute; right: -20px; bottom: 4px; padding: 9px 15px; color: #594024; background: #fae7ba; border: 3px solid #fff; border-radius: 30px; font-size: 12px; font-weight: 700; letter-spacing: .5px; transform: rotate(-8deg); box-shadow: 0 5px 12px #59402414; }
+.invitation-greeting { margin: 0 0 12px; font-size: 15px; overflow-wrap: anywhere; }
+.invitation-greeting strong { color: var(--accent); font-weight: 600; }
+.invitation-card h1 { margin: 0; font: 400 clamp(30px, 6vw, 39px)/1.18 Georgia, serif; letter-spacing: -1px; overflow-wrap: anywhere; }
+.invitation-card h1 em { color: var(--accent); }
+.invitation-description { max-width: 340px; margin: 18px auto 26px; font-size: 14px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.invitation-details { margin: 0 0 26px; padding: 4px 22px; background: #faf6fc; border: 1px solid #eee5f3; border-radius: 18px; text-align: left; }
+.invitation-details > div { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 14px; padding: 17px 0; }
+.invitation-details > div + div { border-top: 1px solid #e9dfee; }
+.invitation-details dt { padding-top: 3px; color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.invitation-details dd { margin: 0; font-size: 14px; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; }
+.invitation-details dd span { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 400; }
+.birthday-app .invitation-rsvp { width: 100%; min-height: 54px; border-radius: 15px; font-size: 14px; }
+.invitation-rsvp > span { font-size: 20px; margin-left: auto; }
+.wish-form { margin-top: 19px; padding-top: 19px; border-top: 1px solid var(--line); text-align: left; animation: invitation-arrive .3s ease both; }
+.wish-form label + label { margin-top: 16px; }
+.optional { color: var(--muted); font-weight: 400; }
+.character-count { display: block; margin: 5px 0 13px; text-align: right; color: var(--muted); font-size: 10px; }
+.wish-form .button { width: 100%; }
+.form-hint { margin: 10px 0 0; text-align: center; font-size: 10px; }
+.guest-notice { padding: 17px; background: #f4edf8; border-radius: 14px; color: #685276; font-size: 12px; line-height: 1.7; }
+.response-success { padding: 16px 13px; margin-bottom: 15px; border-radius: 14px; background: #eaf4eb; color: #3e6a4a; font-size: 12px; }
+.response-success > span { display: inline-block; margin-right: 6px; }
+.response-success p { margin: 6px 0 0; color: #50725b; font-size: 11px; }
+.invitation-signoff { margin: 25px 0 0; color: var(--accent) !important; font: italic 16px Georgia, serif; }
+.invitation-sparkle { position: absolute; color: #ad87ba; pointer-events: none; }
+.sparkle-one { top: 98px; left: 52px; font-size: 30px; transform: rotate(15deg); }
+.sparkle-two { top: 165px; right: 45px; font-size: 24px; transform: rotate(-12deg); }
+.guest-demo-footer { padding: 15px 20px; text-align: center; color: var(--muted); font-size: 10px; background: #fff; }
+@keyframes invitation-arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (hover: hover) {
+  .birthday-app .button:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 6px 16px #76529121; }
+  .birthday-app .button.primary:hover { background: #86619c; }
+  .admin-sidebar nav a:hover { background: #4a3554; }
+  .birthday-app .text-button:hover { color: #49245e; }
+  .message-preview:hover { background: #f7f2fb; }
+}
+@media (max-width: 1250px) {
+  .admin-main { padding-inline: 28px; }
+  .guest-row { grid-template-columns: 42px minmax(100px, 1fr) auto; }
+  .row-actions { grid-column: 2 / -1; }
+  .add-guest-panel { grid-template-columns: 1fr; gap: 20px; }
+  .stat small { display: block; width: 100%; margin-top: 5px; }
+}
+@media (max-width: 850px) {
+  .admin-shell { grid-template-columns: 190px minmax(0, 1fr); }
+  .admin-sidebar { padding: 28px 15px; }
+  .brand { font-size: 22px; gap: 9px; }
+  .brand small { max-width: 110px; font-size: 9px; }
+  .admin-main { padding: 24px 22px; }
+  .stats-grid { gap: 10px; }
+  .stat { padding: 17px 15px; }
+  .stat > span { font-size: 11px; }
+  .heading-flower { display: none; }
+  .admin-topbar > span { font-size: 9px; letter-spacing: .8px; }
+  .inbox-layout { grid-template-columns: 1fr; }
+  .message-list { border-right: 0; border-bottom: 1px solid var(--line); }
+  .message-placeholder { min-height: 180px; }
+  .inbox-heading .button { width: 100%; }
+}
+@media (max-width: 650px) {
+  .admin-shell { display: block; }
+  .admin-sidebar { position: static; min-height: 0; padding: 20px 20px 13px; }
+  .brand small, .sidebar-label, .sidebar-bottom { display: none; }
+  .admin-sidebar nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; margin-top: 20px; }
+  .admin-sidebar nav a { justify-content: center; padding: 11px 6px; font-size: 11px; gap: 7px; }
+  .admin-sidebar nav a > span:first-child { font-size: 17px; }
+  .nav-count { margin-left: 0; min-width: 19px; height: 19px; font-size: 9px; }
+  .admin-main { padding: 19px 18px; }
+  .admin-topbar { padding-bottom: 18px; }
+  .admin-topbar > span { max-width: 130px; line-height: 1.8; }
+  .dashboard-heading { padding-block: 26px 22px; }
+  .dashboard-heading h1 { font-size: 30px; }
+  .stat { padding: 15px 12px; }
+  .stat strong { font-size: 27px; }
+  .stat small { font-size: 9px; }
+  .stats-grid { margin-bottom: 22px; }
+  .add-guest-panel { padding: 23px 20px; }
+  .add-guest-controls { flex-wrap: wrap; }
+  .add-guest-controls input { flex-basis: 180px; }
+  .section-heading { padding: 21px 20px; }
+  .section-heading .search-field { width: 100%; }
+  .guest-list { padding-inline: 20px; }
+  .guest-row { grid-template-columns: 38px minmax(0, 1fr) auto; gap: 10px; }
+  .guest-avatar { width: 38px; height: 38px; font-size: 12px; }
+  .status-badge { font-size: 9px; padding: 4px 7px; }
+  .row-actions { grid-column: 1 / -1; gap: 10px; margin-top: 3px; }
+  .settings-panel > form { padding-inline: 20px; }
+  .settings-grid { gap: 18px; }
+  .settings-footer .button { width: 100%; }
+  .inbox-toolbar { padding-inline: 20px; }
+  .inbox-toolbar .search-field { width: 100%; }
+  .message-detail { padding: 24px 20px; }
+  .preview-bar { padding: 15px 18px; }
+  .preview-controls { gap: 8px; }
+  .preview-controls .demo-label { display: none; }
+  .preview-controls select { width: 145px; }
+  .birthday-app input, .birthday-app select, .birthday-app textarea { font-size: 16px; }
+  .search-field input { font-size: 16px; }
+  .photo-settings p { font-size: 10px; }
+}
+@media (max-width: 480px) {
+  .invitation-page { padding: 22px 14px; }
+  .invitation-card { padding: 30px 23px 26px; border-radius: 25px; }
+  .invitation-eyebrow { font-size: 10px; letter-spacing: 1.8px; }
+  .invitation-details { padding-inline: 16px; }
+  .invitation-details > div { grid-template-columns: 45px minmax(0, 1fr); gap: 10px; }
+  .sparkle-one { left: 24px; } .sparkle-two { right: 20px; }
+  .settings-grid { grid-template-columns: 1fr; }
+  .preview-bar .brand { width: 100%; }
+  .preview-controls { justify-content: space-between; width: 100%; }
+  .stats-grid { gap: 7px; }
+  .stat { padding: 13px 9px; }
+  .stat > span { font-size: 10px; }
+  .stat small { font-size: 8px; }
+  .guest-row { grid-template-columns: 38px minmax(0, 1fr); }
+  .guest-row > .status-badge { grid-column: 2; margin-top: -8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .invitation-card, .wish-form { animation: none; }
+  .birthday-app .button { transition: none; }
+}
+
+.sidebar-bottom a { display: inline-block; margin-top: 10px; font-size: 11px; }
